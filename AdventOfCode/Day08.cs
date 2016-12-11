@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/8
-    public static class Day8
+    public static class Day08
     {
         public static int CountPixels(string input)
         {

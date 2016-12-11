@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/9
-    public static class Day9
+    public static class Day09
     {
         public static int GetDecompressedLength(string input)
         {

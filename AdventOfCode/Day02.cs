@@ -3,7 +3,7 @@
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/2
-    public static class Day2
+    public static class Day02
     {
         public static string FindBathroomCode(string rawInput)
         {

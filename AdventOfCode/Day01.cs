@@ -5,7 +5,7 @@ using System.Linq;
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/1
-    public static class Day1
+    public static class Day01
     {
         public static int FindDistanceFromHQ(string rawInput)
         {

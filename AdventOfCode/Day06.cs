@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdventOfCode
 {
-    public static class Day6
+    public static class Day06
     {
         // https://adventofcode.com/2016/day/6
         public static string DecodeMessageWithMostOccuringLetter(string input)

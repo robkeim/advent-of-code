@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/4
-    public static class Day4
+    public static class Day04
     {
         public static int FindRealRooms(string input)
         {

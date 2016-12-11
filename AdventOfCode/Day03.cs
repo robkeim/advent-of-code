@@ -3,7 +3,7 @@
 namespace AdventOfCode
 {
     // https://adventofcode.com/2016/day/3
-    public static class Day3
+    public static class Day03
     {
         public static int CountValidTriangles(string input)
         {
