@@ -8,16 +8,30 @@ namespace AdventOfCode
     public static class Day10
     {
         private static readonly Dictionary<int, Bot> _bots = new Dictionary<int, Bot>();
-        private static bool _solutionFound;
-        private static int _solutionId = -1;
+        private static readonly Dictionary<int, int> _outputValues = new Dictionary<int, int>();
+        private static int _solutionId;
         private static int _lowValue;
         private static int _highValue;
-
+        
         public static int BalanceBots(string input, int lowValue, int highValue)
         {
             _lowValue = lowValue;
             _highValue = highValue;
             
+            BalanceBotsSetup(input);
+            
+            return _solutionId;
+        }
+
+        public static int BalanceBots(string input)
+        {
+            BalanceBotsSetup(input);
+
+            return _outputValues[0] * _outputValues[1] * _outputValues[2];
+        }
+
+        private static void BalanceBotsSetup(string input)
+        {
             var instructionRegex = new Regex(@"bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)", RegexOptions.Compiled);
 
             foreach (var line in input.Split("\n".ToCharArray()))
@@ -27,8 +41,10 @@ namespace AdventOfCode
                 if (match.Success)
                 {
                     var id = int.Parse(match.Groups[1].ToString());
-                    var lowDestination = match.Groups[2].ToString() == "bot" ? (int?)int.Parse(match.Groups[3].ToString()) : null;
-                    var highDestination = match.Groups[4].ToString() == "bot" ? (int?)int.Parse(match.Groups[5].ToString()) : null;
+                    var lowTarget = match.Groups[2].ToString() == "bot" ? Target.Bot : Target.Output;
+                    var lowTargetValue = int.Parse(match.Groups[3].ToString());
+                    var highTarget = match.Groups[4].ToString() == "bot" ? Target.Bot : Target.Output;
+                    var highTargetValue = int.Parse(match.Groups[5].ToString());
 
                     Bot bot;
 
@@ -37,20 +53,15 @@ namespace AdventOfCode
                         bot = new Bot(id);
                         _bots[id] = bot;
                     }
-                    
-                    bot.SetInstructions(lowDestination, highDestination);
+
+                    bot.SetInstructions(lowTarget, lowTargetValue, highTarget, highTargetValue);
                 }
             }
-            
+
             var valueRegex = new Regex(@"value (\d+) goes to bot (\d+)", RegexOptions.Compiled);
 
             foreach (var line in input.Split("\n".ToCharArray()))
             {
-                if (_solutionFound)
-                {
-                    break;
-                }
-
                 var match = valueRegex.Match(line);
 
                 if (match.Success)
@@ -61,26 +72,28 @@ namespace AdventOfCode
                     _bots[id].GiveChip(chipId);
                 }
             }
-            
-            return _solutionId;
         }
-        
+
         private class Bot
         {
             private readonly int _id;
             private int? _chip;
-            private int? _lowDestination;
-            private int? _highDestination;
+            private Target _lowTarget;
+            private int _lowValue;
+            private Target _highTarget;
+            private int _highValue;
 
             public Bot(int id)
             {
                 _id = id;
             }
 
-            public void SetInstructions(int? lowDestination = null, int? highDestination = null)
+            public void SetInstructions(Target lowTarget, int lowValue, Target highTarget, int highValue)
             {
-                _lowDestination = lowDestination;
-                _highDestination = highDestination;
+                _lowTarget = lowTarget;
+                _lowValue = lowValue;
+                _highTarget = highTarget;
+                _highValue = highValue;
             }
             
             public void GiveChip(int chip)
@@ -96,28 +109,41 @@ namespace AdventOfCode
 
                     _chip = null;
 
-                    if (low == _lowValue && high == _highValue)
+                    if (low == Day10._lowValue && high == Day10._highValue)
                     {
-                        _solutionFound = true;
                         _solutionId = _id;
                     }
 
-                    if (_lowDestination.HasValue)
+                    if (_lowTarget == Target.Bot)
                     {
-                        _bots[_lowDestination.Value].GiveChip(low);
+                        _bots[_lowValue].GiveChip(low);
+                    }
+                    else
+                    {
+                        _outputValues[_lowValue] = low;
                     }
 
-                    if (_highDestination.HasValue)
+                    if (_highTarget == Target.Bot)
                     {
-                        _bots[_highDestination.Value].GiveChip(high);
+                        _bots[_highValue].GiveChip(high);
+                    }
+                    else
+                    {
+                        _outputValues[_highValue] = high;
                     }
                 }
             }
 
             public override string ToString()
             {
-                return $"Id = {_id}, Chip = {_chip}, LowDestination = {_lowDestination}, HighDestination = {_highDestination}";
+                return $"Id = {_id}, Chip = {_chip}, LowDestination = {_lowValue}, HighDestination = {_highValue}";
             }
+        }
+
+        public enum Target
+        {
+            Bot,
+            Output
         }
     }
 }
