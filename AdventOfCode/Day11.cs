@@ -16,8 +16,12 @@ namespace AdventOfCode
             // Sample input
             //elementsToProcess.Enqueue(State.MakeState(0 /* <puzzle input: download from adventofcode.com> */));
 
+            // Part I
+            //AddQueueItem(elementsToProcess, visited, State.MakeState(0 /* <puzzle input: download from adventofcode.com> */));
+
+            // Part II
             AddQueueItem(elementsToProcess, visited, State.MakeState(0 /* <puzzle input: download from adventofcode.com> */));
-            
+
             while (elementsToProcess.Count != 0)
             {
                 var curElem = elementsToProcess.Dequeue();
