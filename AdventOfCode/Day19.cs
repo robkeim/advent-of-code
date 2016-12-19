@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode
 {
@@ -36,6 +33,31 @@ namespace AdventOfCode
             }
 
             return queue.Dequeue();
+        }
+
+        // This solution is O(n^2) and takes a few minutes to run for my sample input, but it's good enough for a programming competition :)
+        public static int LuckyElfAcross(int size)
+        {
+            var elves = new List<int>(size);
+            elves.AddRange(Enumerable.Range(1, size));
+
+            var curIndex = 0;
+
+            while (elves.Count > 1)
+            {
+                var indexToRemove = (curIndex + elves.Count / 2) % elves.Count;
+
+                elves.RemoveAt(indexToRemove);
+
+                if (indexToRemove > curIndex)
+                {
+                    curIndex++;
+                }
+
+                curIndex %= elves.Count;
+            }
+
+            return elves[0];
         }
     }
 }
