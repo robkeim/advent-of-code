@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AdventOfCode
 {
@@ -95,6 +97,48 @@ namespace AdventOfCode
             }
             
             return result;
+        }
+
+        // Brute force solution but given the password is 8 characters long, there are only 40,320 (8!) combinations to try
+        public static string UnscrambleLetters(string scrambledResult, string instructions)
+        {
+            var result = string.Empty;
+
+            Parallel.ForEach(GetPermutations(scrambledResult), permutation =>
+            {
+                if (ScrambledLettersHash(permutation, instructions) == scrambledResult)
+                {
+                    Console.WriteLine(permutation);
+                    result = permutation;
+                }
+            });
+
+            return result;
+        }
+
+        private static List<string> GetPermutations(string input)
+        {
+            return GetPermutations(string.Empty, input);
+        }
+
+        private static List<string> GetPermutations(string soFar, string remaining)
+        {
+            if (remaining.Length == 0)
+            {
+                return new List<string> { soFar };
+            }
+
+            var results = new List<string>();
+
+            for (int i = 0; i < remaining.Length; i++)
+            {
+                var nextSoFar = $"{soFar}{remaining[i]}";
+                var nextRemaining = remaining.Remove(i, 1);
+
+                results.AddRange(GetPermutations(nextSoFar, nextRemaining));
+            }
+           
+            return results;
         }
 
         private static string ReplaceAt(this string input, int index, char replacement)
