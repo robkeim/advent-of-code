@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode
@@ -38,6 +39,40 @@ namespace AdventOfCode
             }
 
             return result;
+        }
+
+        // My approach here was to print the grid and count by hand, as this is similar to the 15 tile puzzles. First you have to navigate using the Manhattan distance
+        // to be next to the target data in the upper right, ensuring that you avoid any "blocked" nodes with too much data. Then perform a series of shifts to move the
+        // target over one space at a time which is calculated by the formula in NumMoves.
+        public static void PrintGrid(string input)
+        {
+            var nodes = input
+                .Split("\n".ToCharArray())
+                .Select(line => Node.CreateNode(line))
+                .Where(n => n != null)
+                .ToList();
+
+            var xMax = nodes.Max(n => n.X);
+            var yMax = nodes.Max(n => n.Y);
+
+            for (int y = 0; y < yMax; y++)
+            {
+                for (int x = 0; x < xMax; x++)
+                {
+                    var node = nodes.Single(n => n.X == x && n.Y == y);
+                    
+                    Console.Write(node.Size > 100 ? "#" : node.Used == 0 ? "_" : ".");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public static int NumMoves(int size)
+        {
+            return size == 1
+                ? 1
+                : 5 + NumMoves(size - 1);
         }
 
         private class Node
