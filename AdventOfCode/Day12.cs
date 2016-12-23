@@ -4,9 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode
 {
+    // https://adventofcode.com/2016/day/12
     public static class Day12
     {
-        // https://adventofcode.com/2016/day/12
         public static int ComputeAssembunny(string input)
         {
             var copyJumpRegex = new Regex(@"(cpy|jnz) ([a-z]|-?\d+) ([a-z]|-?\d+)", RegexOptions.Compiled);

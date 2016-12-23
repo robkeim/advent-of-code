@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace AdventOfCode
 {
+    // https://adventofcode.com/2016/day/16
     public static class Day16
     {
-        // https://adventofcode.com/2016/day/16
         public static string GetDragonChecksum(string input, int diskSize)
         {
             var data = GetData(input, diskSize);

@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace AdventOfCode
 {
+    // https://adventofcode.com/2016/day/20
     public static class Day20
     {
-        // https://adventofcode.com/2016/day/20
         public static uint GetLowestFirewallValue(string input)
         {
             var ranges = new List<Tuple<uint, uint>>();

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AdventOfCode
 {
+    // https://adventofcode.com/2016/day/6
     public static class Day06
     {
-        // https://adventofcode.com/2016/day/6
         public static string DecodeMessageWithMostOccuringLetter(string input)
         {
             return DecodeMessage(input, GetMostOccuring);
