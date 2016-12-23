@@ -17,13 +17,15 @@ namespace AdventOfCode
 
             var registers = new Dictionary<string, int>
             {
-                ["a"] = 7,
+                ["a"] = 7, // 12 for Part II which runs *really* slowly :)
                 ["b"] = 0,
                 ["c"] = 0,
                 ["d"] = 0
             };
             
             var curInstructionIndex = 0;
+
+            var totalInstructions = 0;
 
             while (curInstructionIndex < instructions.Length)
             {
@@ -204,8 +206,8 @@ namespace AdventOfCode
                 Jump
             }
 
-            private Regex _oneArgumentRegex = new Regex(@"(inc|dec|tgl) ([a-z])", RegexOptions.Compiled);
-            private Regex _twoArgumentRegex = new Regex(@"(cpy|jnz) ([a-z]|-?\d+) ([a-z]|-?\d+)", RegexOptions.Compiled);
+            private static readonly Regex _oneArgumentRegex = new Regex(@"(inc|dec|tgl) ([a-z])", RegexOptions.Compiled);
+            private static readonly Regex _twoArgumentRegex = new Regex(@"(cpy|jnz) ([a-z]|-?\d+) ([a-z]|-?\d+)", RegexOptions.Compiled);
         }
     }
 }
