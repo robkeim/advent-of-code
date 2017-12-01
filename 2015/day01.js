@@ -30,4 +30,30 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let total = 0;
+
+    for (let i = 0; i < input.length; i++) {
+        if (input[i] === '(') {
+            total++;
+        } else {
+            total--;
+        }
+
+        if (total < 0) {
+            return i + 1;
+        }
+    }
+
+    throw Error('Santa never reached the basement');
+}
+
+function runPart2() {
+    Utils.assertAreEqual(1, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(5, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
