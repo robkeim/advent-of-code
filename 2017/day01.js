@@ -31,4 +31,30 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    const length = input.length;
+    input = input + input;
+
+    let total = 0;
+
+    for (let i = 0; i < length; i++) {
+        if (input[i] === input[i + (length / 2)]) {
+            total += parseInt(input[i]);
+        }
+    }
+
+    return total;
+}
+
+function runPart2() {
+    assertAreEqual(6, part2('<puzzle input: download from adventofcode.com>'));
+    assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
+    assertAreEqual(12, part2('<puzzle input: download from adventofcode.com>'));
+    assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
+    
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
