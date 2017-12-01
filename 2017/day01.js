@@ -1,3 +1,5 @@
+// https://adventofcode.com/2017/day/1
+
 const Utils = require('./utils.js');
 
 function part1(input) {
