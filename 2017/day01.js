@@ -1,12 +1,4 @@
-function assertAreEqual(expected, actual) {
-    if (expected === actual) {
-        console.log('OK ' + expected);
-    } else {
-        console.log('Expected = ' + expected);
-        console.log('Actual   = ' + actual);
-        throw Error('Unexpected results');
-    }
-}
+const Utils = require('./utils.js');
 
 function part1(input) {
     input = input + input[0];
@@ -23,10 +15,10 @@ function part1(input) {
 }
 
 function runPart1() {
-    assertAreEqual(3, part1('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(4, part1('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(0, part1('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(9, part1('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(3, part1('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(4, part1('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part1('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(9, part1('<puzzle input: download from adventofcode.com>'));
 
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
@@ -47,12 +39,12 @@ function part2(input) {
 }
 
 function runPart2() {
-    assertAreEqual(6, part2('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(12, part2('<puzzle input: download from adventofcode.com>'));
-    assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
-    
+    Utils.assertAreEqual(6, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(12, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(4, part2('<puzzle input: download from adventofcode.com>'));
+
     console.log(part2('<puzzle input: download from adventofcode.com>'));
 }
 
