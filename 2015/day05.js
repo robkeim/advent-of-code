@@ -49,4 +49,58 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let numNiceWords = input.split('\n').filter(value => {
+        // Check for repeating pair
+        let hasRepeatingPair = false;
+
+        for (let i = 0; i < value.length - 2; i++) {
+            for (let j = i + 2; j < value.length - 1; j++) {
+                if (value[i] === value[j] && value[i + 1] === value[j + 1]) {
+                    hasRepeatingPair = true;
+                    break;
+                }
+            }
+
+            if (hasRepeatingPair) {
+                break;
+            }
+        }
+
+        if (!hasRepeatingPair) {
+            return false;
+        }
+
+        // Check for xyx pattern
+        let hasXyxPattern = false;
+
+        for (let i = 0; i < value.length - 2; i++) {
+            if (value[i] === value[i + 2]) {
+                hasXyxPattern = true;
+                break;
+            }
+        }
+
+        if (!hasXyxPattern) {
+            return false;
+        }
+
+        return true;
+    });
+
+    return numNiceWords.length;
+}
+
+function runPart2() {
+    Utils.assertAreEqual(1, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(1, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+
+    Utils.assertAreEqual(1, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
