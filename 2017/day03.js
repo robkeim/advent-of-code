@@ -9,30 +9,30 @@ function part1(input) {
     let curY = 0;
 
     let curDir = 'R';
-    let curNum = 1;
-    let remaining = curNum;
+    let numInCurDirection = 1;
+    let remainingInCurDirection = numInCurDirection;
     while (--input > 0) {
-        if (remaining === 0) {
+        if (remainingInCurDirection === 0) {
             switch (curDir) {
                 case 'R':
                     curDir = 'U';
                     break;
                 case 'U':
                     curDir = 'L';
-                    curNum++;
+                    numInCurDirection++;
                     break;
                 case 'L':
                     curDir = 'D';
                     break;
                 case 'D':
                     curDir = 'R';
-                    curNum++;
+                    numInCurDirection++;
                     break;
                 default:
                     throw Error('Invalid direction');
             }
 
-            remaining = curNum;
+            remainingInCurDirection = numInCurDirection;
         }
 
         switch (curDir) {
@@ -52,7 +52,7 @@ function part1(input) {
                 throw Error('Invalid direction');
         }
 
-        remaining--;
+        remainingInCurDirection--;
     }
 
     return Math.abs(curX) + Math.abs(curY);
@@ -67,4 +67,84 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let curX = 0;
+    let curY = 0;
+
+    let squareNum = 2;
+    let squares = new Set();
+    squares['0_0'] = 1;
+    let curDir = 'R';
+    let numInCurDirection = 1;
+    let remainingInCurDirection = numInCurDirection;
+    while (true) {
+        if (remainingInCurDirection === 0) {
+            switch (curDir) {
+                case 'R':
+                    curDir = 'U';
+                    break;
+                case 'U':
+                    curDir = 'L';
+                    numInCurDirection++;
+                    break;
+                case 'L':
+                    curDir = 'D';
+                    break;
+                case 'D':
+                    curDir = 'R';
+                    numInCurDirection++;
+                    break;
+                default:
+                    throw Error('Invalid direction');
+            }
+
+            remainingInCurDirection = numInCurDirection;
+        }
+
+        switch (curDir) {
+            case 'R':
+                curX++;
+                break;
+            case 'U':
+                curY++;
+                break;
+            case 'L':
+                curX--;
+                break;
+            case 'D':
+                curY--;
+                break;
+            default:
+                throw Error('Invalid direction');
+        }
+
+        remainingInCurDirection--;
+
+        let sumOfNeighbors = 0;
+
+        for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+                const key = (curX + i) + '_' + (curY + j);
+                const value = squares[key];
+
+                if (value !== undefined) {
+                    sumOfNeighbors += squares[key];
+                }
+            }
+        }
+
+        if (sumOfNeighbors > input) {
+            return sumOfNeighbors;
+        }
+
+        squares[curX + '_' + curY] = sumOfNeighbors;
+        squareNum++;
+    }
+}
+
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
