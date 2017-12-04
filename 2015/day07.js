@@ -29,7 +29,7 @@ function part1(input) {
         if (match) {
             let value = parseInt(match[1]) || knownValues[match[1]];
 
-            if (value) {
+            if (value !== undefined) {
                 knownValues[match[2]] = value;
                 instructions.splice(index, 1);
             }
@@ -43,10 +43,9 @@ function part1(input) {
         if (match) {
             let value = parseInt(match[1]) || knownValues[match[1]];
 
-            if (value) {
-                // This bit shifting isn't working since it's not a 16-bit unsigned value
-                knownValues[match[2]] = ~value;
-                knownValues[match[2]] = result;
+            if (value !== undefined) {
+                // This simulates the bitwise NOT since JavaScript doesn't have an unsigned bitwise NOT
+                knownValues[match[2]] = 65535 - value;
                 instructions.splice(index, 1);
             }
 
@@ -62,24 +61,28 @@ function part1(input) {
 
             switch (match[2]) {
                 case 'AND':
-                    if (valOp1 && valOp2) {
+                    if (valOp1 !== undefined && valOp2 !== undefined) {
                         knownValues[match[4]] = valOp1 & valOp2;
+                        instructions.splice(index, 1);
                     }
                     break;
                 case 'OR':
-                    if (valOp1 && valOp2) {
+                    if (valOp1 !== undefined && valOp2 !== undefined) {
                         knownValues[match[4]] = valOp1 | valOp2;
+                        instructions.splice(index, 1);
                     }
                     break;
                 case 'LSHIFT':
-                    if (valOp1 && valOp2) {
+                    if (valOp1 !== undefined && valOp2 !== undefined) {
                         // This bit shifting isn't working since it's not respecting the 16 bit size limit
                         knownValues[match[4]] = (valOp1 << valOp2);
+                        instructions.splice(index, 1);
                     }
                     break;
                 case 'RSHIFT':
-                    if (valOp1 && valOp2) {
+                    if (valOp1 !== undefined && valOp2 !== undefined) {
                         knownValues[match[4]] = valOp1 >>> valOp2;
+                        instructions.splice(index, 1);
                     }
                     break;
                 default:
@@ -117,8 +120,8 @@ function runPart1() {
     Utils.assertAreEqual(3, part1('<puzzle input: download from adventofcode.com>'));
     Utils.assertAreEqual(3, part1('<puzzle input: download from adventofcode.com>'));
 
-    part1('<puzzle input: download from adventofcode.com>');
-    //console.log(part1('<puzzle input: download from adventofcode.com>'));
+    //part1('<puzzle input: download from adventofcode.com>');
+    console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
 runPart1();
