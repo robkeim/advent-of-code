@@ -73,4 +73,9 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function runPart2() {
+    console.log(part1('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
