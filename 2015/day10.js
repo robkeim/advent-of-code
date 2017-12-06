@@ -35,15 +35,6 @@ function part1(input) {
     return result.length;
 }
 
-function part2(input) {
-    let result = input;
-    for (let i = 0; i < 50; i++) {
-        result = encodeSequence(result);
-    }
-
-    return result.length;
-}
-
 function runPart1() {
     Utils.assertAreEqual('11', encodeSequence('1'));
     Utils.assertAreEqual('21', encodeSequence('11'));
@@ -52,6 +43,15 @@ function runPart1() {
     Utils.assertAreEqual('312211', encodeSequence('111221'));
 
     console.log(part1('<puzzle input: download from adventofcode.com>'));
+}
+
+function part2(input) {
+    let result = input;
+    for (let i = 0; i < 50; i++) {
+        result = encodeSequence(result);
+    }
+
+    return result.length;
 }
 
 function runPart2() {
