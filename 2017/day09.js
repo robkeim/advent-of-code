@@ -23,7 +23,7 @@ function part1(input) {
 
 function cleanString(input) {
     input = input.replace(/!./g, '');
-    return input.replace(/<[^>]*?>/g, '')
+    return input.replace(/<[^>]*?>/g, '');
 }
 
 function runPart1() {
@@ -57,4 +57,31 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    input = input.replace(/!./g, '');
+
+    const regex = /<([^>]*?)>/g;
+
+    let total = 0;
+    let match;
+    while ((match = regex.exec(input)) !== null) {
+        total += match[1].length;
+    }
+
+    return total;
+}
+
+function runPart2() {
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(17, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(3, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(2, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(0, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual(10, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
