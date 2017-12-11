@@ -6,8 +6,6 @@ function part1(input) {
     let q = 0;
     let r = 0;
 
-    let foo = input.split(',');
-
     for (let i in dirs) {
         switch (dirs[i]) {
             case 'n':
@@ -51,4 +49,47 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let dirs = input.split(',');
+    let q = 0;
+    let r = 0;
+    let max = 0;
+
+    for (let i in dirs) {
+        switch (dirs[i]) {
+            case 'n':
+                r--;
+                break;
+            case 'ne':
+                q++;
+                r--;
+                break;
+            case 'se':
+                q++;
+                break;
+            case 's':
+                r++;
+                break;
+            case 'sw':
+                q--;
+                r++;
+                break;
+            case 'nw':
+                q--;
+                break;
+            default:
+                throw Error('Invalid direction: ' + dir);
+        }
+
+        max = Math.max(max, calcDir(0, 0, q, r));
+    }
+
+    return max;
+}
+
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
