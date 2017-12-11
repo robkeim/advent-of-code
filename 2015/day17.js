@@ -43,4 +43,42 @@ function runPart1() {
     console.log(part1(150, '<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(numLiters, input) {
+    const jars = input.split('\n').map(v => parseInt(v));
+
+    let combinations = getCombinations(jars.length);
+    let result = 0;
+    let minNumJars = Number.MAX_SAFE_INTEGER;
+
+    for (let i = 0; i < combinations.length; i++) {
+        let total = 0;
+
+        for (let j = 0; j < jars.length; j++) {
+            if (combinations[i][j]) {
+                total += jars[j];
+            }
+        }
+
+        if (total === numLiters) {
+            let numJars = combinations[i].filter(v => v === 1).length;
+
+            if (numJars < minNumJars) {
+                minNumJars = numJars;
+                result = 1;
+            } else if (numJars === minNumJars) {
+                result++;
+            }
+        }
+    }
+
+    return result;
+}
+
+function runPart2() {
+    Utils.assertAreEqual(3, part2(25, '<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2(150, '<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
