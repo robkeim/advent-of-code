@@ -2,50 +2,6 @@
 
 const Utils = require('./utils.js');
 
-/*function part1(length, input) {
-    let lengths = input.split(',').map(v => parseInt(v));
-
-    let list = [];
-
-    for (let i = 0; i < length; i++) {
-        list.push(i);
-    }
-
-    // Always reset curPos to 0 for each iteration?
-    let curPos = 0;
-    let skipSize = 0;
-    let startIndex = 0;
-
-    for (let i = 0; i < lengths.length; i++) {
-        let curLength = lengths[i];
-        let splice = list.splice(0, curLength);
-
-        for (let j = 0; j < splice.length; j++) {
-            list.splice(0, 0, splice[j]);
-        }
-
-        console.log(list.join(' ') + ' -> index: ' + startIndex + ' value: ' + list[startIndex]);
-
-        curPos += curLength + skipSize;
-        skipSize++;
-
-        curPos %= length;
-
-        let newList = [];
-
-        for (let j = 0; j < list.length; j++) {
-            newList.push(list[(j + curPos) % list.length]);
-        }
-
-        list = newList;
-        startIndex = (startIndex + list.length - curPos - 1) % list.length;
-        curPos = 0;
-    }
-
-    return list[startIndex - 1] * list[startIndex];
-    //return list[startIndex] * list[(startIndex + 1) % list.length];
-}*/
-
 function part1(listLength, input) {
     let lengths = input.split(',').map(v => parseInt(v));
 
@@ -105,10 +61,68 @@ function runPart1() {
 }
 
 function part2(input) {
+    let list = [];
+
+    for (let i = 0; i < 256; i++) {
+        list.push(i);
+    }
+
+    let lengths = input
+        .split('')
+        .map(c => c.charCodeAt(0))
+        .concat([17, 31, 73, 47, 23]);
+
+    let curPos = 0;
+    let skipSize = 0;
+
+    for (let i = 0; i < 64; i++) {
+        let result = applyOneRound(list, lengths, curPos, skipSize);
+        list = result.list;
+        curPos = result.curPos;
+        skipSize = result.skipSize;
+    }
+
+    let blocksToHash = [];
+
+    for (let i = 0; i < 256; i += 16) {
+        blocksToHash.push(list.slice(i, i + 16));
+    }
+
+    let hashes = blocksToHash.map(block => {
+        return block.reduce((acc, cur) => acc ^ cur);
+    });
+
+    let hexHashes = hashes.map(hash => {
+        // Ensure that each hex has a leading 0 if needed
+        return ('0' + hash.toString(16)).slice(-2);
+    });
+
+    return hexHashes.join('');
+}
+
+function applyOneRound(list, lengths, curPos, skipSize) {
+    for (let i = 0; i < lengths.length; i++) {
+        let curLength = lengths[i];
+        list = reverse(list, curPos, curLength);
+
+        curPos += curLength + skipSize;
+        skipSize++;
+
+        curPos %= list.length;
+    }
+
+    return {
+        list: list,
+        curPos: curPos,
+        skipSize: skipSize,
+    };
 }
 
 function runPart2() {
-    //Utils.assertAreEqual(6, part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual('a2582a3a0e66e6e86e3812dcb672a272', part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual('33efeb34ea91902bb2f59c9920caa6cd', part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual('3efbe78a8d82f29979031a4aa0b16a9d', part2('<puzzle input: download from adventofcode.com>'));
+    Utils.assertAreEqual('63960835bcdc130f0b66d7ff4f6a5a8e', part2('<puzzle input: download from adventofcode.com>'));
 
     console.log(part2('<puzzle input: download from adventofcode.com>'));
 }
