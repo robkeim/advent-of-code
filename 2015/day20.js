@@ -28,4 +28,33 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let houses = [];
+
+    for (let elf = 1; elf <= input; elf++) {
+        for (let i = 1; i <= 50; i++) {
+            let index = elf * i;
+
+            if (index > input) {
+                break;
+            }
+
+            houses[index] = (houses[index] || 0) + (11 * elf);
+        }
+    }
+
+    for (let i = 0; i < houses.length; i++) {
+        if (houses[i] >= input) {
+            return i;
+        }
+    }
+
+    throw Error('Selected array size too small');
+}
+
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
