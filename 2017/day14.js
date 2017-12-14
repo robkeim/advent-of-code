@@ -143,4 +143,59 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    let usedSpaces = new Set();
+
+    for (let y = 0; y < 128; y++) {
+        let hash = knotHash(input + '-' + y);
+
+        let line = hash.split('').map(c => hexToBin(c)).join('');
+
+        for (let x = 0; x < 128; x++) {
+            if (line[x] === '1') {
+                usedSpaces.add(x + '_' + y);
+            }
+        }
+    }
+
+    let numGroups = 0;
+
+    while (usedSpaces.size > 0) {
+        numGroups++;
+        let toProcess = [];
+        let value = usedSpaces.keys().next().value;
+        toProcess.push(value);
+        usedSpaces.delete(value);
+
+        while (toProcess.length > 0) {
+            value = toProcess.pop();
+            let split = value.split('_');
+            let x = parseInt(split[0]);
+            let y = parseInt(split[1]);
+            let neighbors = [
+                (x + 1) + '_' + y,
+                (x - 1) + '_' + y,
+                x + '_' + (y + 1),
+                x + '_' + (y - 1),
+            ];
+
+            for (let i = 0; i < neighbors.length; i++) {
+                if (usedSpaces.has(neighbors[i])) {
+                    toProcess.push(neighbors[i]);
+                    usedSpaces.delete(neighbors[i]);
+                }
+            }
+        }
+    }
+
+    return numGroups;
+}
+
+function runPart2() {
+    Utils.assertAreEqual(1242, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
