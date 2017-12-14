@@ -1,6 +1,16 @@
+// https://adventofcode.com/2015/day/21
+
 const Utils = require('./utils.js');
 
 function part1(bossDamage, bossArmor, bossHitPoints) {
+    return calculate(bossDamage, bossArmor, bossHitPoints).minAndWin;
+}
+
+function part2(bossDamage, bossArmor, bossHitPoints) {
+    return calculate(bossDamage, bossArmor, bossHitPoints).maxAndLose;
+}
+
+function calculate(bossDamage, bossArmor, bossHitPoints) {
     let weapons = [
         [8, 4],
         [10, 5],
@@ -28,7 +38,8 @@ function part1(bossDamage, bossArmor, bossHitPoints) {
         [80, 0, 3],
     ];
 
-    let minGold = Number.MAX_SAFE_INTEGER;
+    let minAndWinGold = Number.MAX_SAFE_INTEGER;
+    let maxAndLoseGold = Number.MIN_SAFE_INTEGER;
     for (let w = 0; w < weapons.length; w++) {
         for (let a = 0; a < armor.length; a++) {
             for (let r1 = 0; r1 < rings.length; r1++) {
@@ -61,8 +72,12 @@ function part1(bossDamage, bossArmor, bossHitPoints) {
 
                     if (winSimulation(playerDamage, playerArmor, 100,
                             bossDamage, bossArmor, bossHitPoints)) {
-                        if (goldSpent < minGold) {
-                            minGold = goldSpent;
+                        if (goldSpent < minAndWinGold) {
+                            minAndWinGold = goldSpent;
+                        }
+                    } else {
+                        if (goldSpent > maxAndLoseGold) {
+                            maxAndLoseGold = goldSpent;
                         }
                     }
                 }
@@ -70,7 +85,10 @@ function part1(bossDamage, bossArmor, bossHitPoints) {
         }
     }
 
-    return minGold;
+    return {
+        minAndWin: minAndWinGold,
+        maxAndLose: maxAndLoseGold,
+    };
 }
 
 function winSimulation(playerDamage, playerArmor, playerHitPoints,
@@ -99,4 +117,9 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>', '<puzzle input: download from adventofcode.com>', '<puzzle input: download from adventofcode.com>'));
 }
 
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>', '<puzzle input: download from adventofcode.com>', '<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
