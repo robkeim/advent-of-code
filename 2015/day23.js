@@ -1,13 +1,21 @@
+// https://adventofcode.com/2015/day/23
+
 const Utils = require('./utils.js');
 
 function part1(input) {
+    return execute(input, 0, 0);
+}
+
+function part2(input) {
+    return execute(input, 1, 0);
+}
+
+function execute(input, a, b) {
     const singleArgRegex = /(hlf|tpl|inc|jmp) \+?([\-ab0-9]+)/;
     const doubleArgRegex = /(jie|jio) ([ab]), \+?([\-0-9]+)/;
 
     let lines = input.split('\n');
     let index = 0;
-    let a = 0;
-    let b = 0;
 
     while (index < lines.length) {
         let match = singleArgRegex.exec(lines[index]);
@@ -101,4 +109,9 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
