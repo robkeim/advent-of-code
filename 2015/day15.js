@@ -69,4 +69,58 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function part2(input) {
+    const regex = /[a-zA-Z]+: capacity (-?\d+), durability (-?\d+), flavor (-?\d+), texture (-?\d+), calories (-?\d)+/;
+
+    let ingredients = input.split('\n').map(line => {
+        let match = regex.exec(line);
+
+        if (!match) {
+            throw Error('Invalid line format: ' + line);
+        }
+
+        return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4]), parseInt(match[5])];
+    });
+
+    let possibilities = getPossibilities(ingredients.length, 100, []);
+
+    let bestScore = Number.MIN_SAFE_INTEGER;
+    for (let i = 0; i < possibilities.length; i++) {
+        let capacity = 0;
+        let durability = 0;
+        let flavor = 0;
+        let texture = 0;
+        let calories = 0;
+
+        for (let j = 0; j < possibilities[i].length; j++) {
+            capacity += ingredients[j][0] * possibilities[i][j];
+            durability += ingredients[j][1] * possibilities[i][j];
+            flavor += ingredients[j][2] * possibilities[i][j];
+            texture += ingredients[j][3] * possibilities[i][j];
+            calories += ingredients[j][4] * possibilities[i][j];
+        }
+
+        capacity = Math.max(0, capacity);
+        durability = Math.max(0, durability);
+        flavor = Math.max(0, flavor);
+        texture = Math.max(0, texture);
+        calories = Math.max(0, calories);
+
+        let score = capacity * durability * flavor * texture;
+
+        if (calories === 500 && score > bestScore) {
+            bestScore = score;
+        }
+    }
+
+    return bestScore;
+}
+
+function runPart2() {
+    Utils.assertAreEqual(57600000, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
