@@ -3,6 +3,14 @@
 const Utils = require('./utils.js');
 
 function part1(input) {
+    return calculate(input, false);
+}
+
+function part2(input) {
+    return calculate(input, true);
+}
+
+function calculate(input, includeSelf) {
     const regex = /([a-zA-Z]+) would (gain|lose) (\d+) happiness units by sitting next to ([a-zA-Z]+)./;
 
     let lines = input.split('\n');
@@ -25,6 +33,10 @@ function part1(input) {
         people.add(match[1]);
         people.add(match[4]);
         weights[match[1] + '_' + match[4]] = weight;
+    }
+
+    if (includeSelf) {
+        people.add('Me');
     }
 
     let permutations = calcPermutations(Array.from(people.keys()));
@@ -74,4 +86,9 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function runPart2() {
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
