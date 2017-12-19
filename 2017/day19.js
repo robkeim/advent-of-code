@@ -3,6 +3,14 @@
 const Utils = require('./utils.js');
 
 function part1(input) {
+    return calculate(input, false);
+}
+
+function part2(input) {
+    return calculate(input, true);
+}
+
+function calculate(input, returnNumSteps) {
     const continueDir = /[|-]/;
     const letter = /[A-Z]/;
     let maze = {};
@@ -27,12 +35,11 @@ function part1(input) {
         }
     }
 
-    printMaze(maze, width, height);
-
     let dir = 'down';
     let x = startX;
     let y = 0;
     let result = '';
+    let numSteps = 0;
 
     while (true) {
         let value = maze[x + '_' + y];
@@ -40,6 +47,8 @@ function part1(input) {
         if (!value) {
             break;
         }
+
+        numSteps++;
 
         switch (dir) {
             case 'up':
@@ -137,7 +146,11 @@ function part1(input) {
         }
     }
 
-    return result;
+    if (returnNumSteps) {
+        return numSteps;
+    } else {
+        return result;
+    }
 }
 
 function getNeighborValues(maze, x, y) {
@@ -165,4 +178,11 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+function runPart2() {
+    Utils.assertAreEqual(38, part2('<puzzle input: download from adventofcode.com>'));
+
+    console.log(part2('<puzzle input: download from adventofcode.com>'));
+}
+
 runPart1();
+runPart2();
