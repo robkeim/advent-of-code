@@ -103,4 +103,68 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
-runPart1();
+function part2(input) {
+    const regex = /p=<(-?\d+),(-?\d+),(-?\d+)>, v=<(-?\d+),(-?\d+),(-?\d+)>, a=<(-?\d+),(-?\d+),(-?\d+)>/;
+
+    let points = input.split('\n').map(line => {
+        let match = regex.exec(line);
+
+        if (!match) {
+            throw Error('Invalid line format: ' + line);
+        }
+
+        return [
+            parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), // position
+            parseInt(match[4]), parseInt(match[5]), parseInt(match[6]), // velocity
+            parseInt(match[7]), parseInt(match[8]), parseInt(match[9]), // acceleration
+        ];
+    });
+
+    while (true) {
+        //console.log('\nIteration:');
+        let positions = new Set();
+        let duplicates = new Set();
+
+        for (let i = 0; i < points.length; i++) {
+            let c = points[i];
+            /*console.log(
+                    'p=<' + c[pX] + ',' + c[pY] + ',' + c[pZ]
+                + ', v=<' + c[vX] + ',' + c[vY] + ',' + c[vZ]
+                + ', a=<' + c[aX] + ',' + c[aY] + ',' + c[aZ] + '>');*/
+
+            // Update velocity
+            points[i][vX] += points[i][aX];
+            points[i][vY] += points[i][aY];
+            points[i][vZ] += points[i][aZ];
+
+            // Update position
+            points[i][pX] += points[i][vX];
+            points[i][pY] += points[i][vY];
+            points[i][pZ] += points[i][vZ];
+
+            let position = points[i][pX] + '_' + points[i][pY] + '_' + points[i][pZ];
+
+            if (positions.has(position)) {
+                duplicates.add(position);
+            } else {
+                positions.add(position);
+            }
+        }
+
+        points = points.filter(point => {
+            let position = point[pX] + '_' + point[pY] + '_' + point[pZ];
+            return !duplicates.has(position);
+        });
+
+        console.log('Num particles = ' + points.length);
+    }
+}
+
+function runPart2() {
+    //part2('<puzzle input: download from adventofcode.com>');
+
+    part2('<puzzle input: download from adventofcode.com>');
+}
+
+//runPart1();
+runPart2();
