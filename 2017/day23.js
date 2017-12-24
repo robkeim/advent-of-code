@@ -9,6 +9,7 @@ function part1(input) {
     let registers = {};
     let index = 0;
     let totalMul = 0;
+    registers['a'] = 1;
 
     while (index >= 0 && index < instructions.length) {
         let match = regex.exec(instructions[index]);
@@ -80,4 +81,23 @@ function runPart1() {
     console.log(part1('<puzzle input: download from adventofcode.com>'));
 }
 
+// I needed assistance from the forums on this one. I incorrectly decoded the assembly
+function runPart2() {
+    let b = (99 * 100) + 100000;
+    let c = b + 17000;
+    let h = 0;
+
+    for (let i = b; i <= c; i += 17) {
+        for (let j = 2; j <= Math.sqrt(i); j++) {
+            if (i % j === 0) {
+                h++; // This value isn't prime so count it
+                break;
+            }
+        }
+    }
+
+    console.log(h);
+}
+
 runPart1();
+runPart2();
