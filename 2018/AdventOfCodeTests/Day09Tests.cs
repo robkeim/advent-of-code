@@ -22,7 +22,9 @@ namespace AdventOfCodeTests
             Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day09.Part1(myInput));
         }
 
-        [TestMethod]
+        // This takes 1.5 to 2 hours to execute due to slow array copying. Using a LinkedList would
+        // speed up the execution time considerably
+        //[TestMethod]
         public void Part2()
         {
             Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day09.Part2("<puzzle input: download from adventofcode.com>"));
