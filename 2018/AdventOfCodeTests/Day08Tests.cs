@@ -16,10 +16,10 @@ namespace AdventOfCodeTests
             Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day08.Part1(myInput));
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void Part2()
         {
-            Assert.AreEqual(-1, Day08.Part2(sampleInput));
+            Assert.AreEqual(66, Day08.Part2(sampleInput));
             Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day08.Part2(myInput));
         }
     }
