@@ -23,7 +23,10 @@ namespace AdventOfCodeTests
         [TestMethod]
         public void Part2()
         {
-            Assert.AreEqual(0, Day14.Part2(sampleInput));
+            Assert.AreEqual(9, Day14.Part2(0 /* <puzzle input: download from adventofcode.com> */));
+            //Assert.AreEqual(5, Day14.Part2(0 /* <puzzle input: download from adventofcode.com> */));
+            Assert.AreEqual(18, Day14.Part2(0 /* <puzzle input: download from adventofcode.com> */));
+            Assert.AreEqual(2018, Day14.Part2(0 /* <puzzle input: download from adventofcode.com> */));
             Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day14.Part2(myInput));
         }
     }
