@@ -8,6 +8,7 @@ namespace AdventOfCode
     {
         const string input = "<puzzle input: download from adventofcode.com>";
 
+        // Part 2 answer: 80393059
         public static void Part1()
         {
             var packages = input
