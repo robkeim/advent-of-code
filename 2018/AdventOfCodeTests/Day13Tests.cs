@@ -22,7 +22,7 @@ namespace AdventOfCodeTests
         {
             Assert.AreEqual("6,4", Day13.Part2("<puzzle input: download from adventofcode.com>"));
             // Incorrect answer: 40,47
-            Assert.AreEqual(0 /* <puzzle answer: solve on adventofcode.com> */, Day13.Part2(myInput));
+            Assert.AreEqual("<puzzle answer: solve on adventofcode.com>", Day13.Part2(myInput));
         }
     }
 }
