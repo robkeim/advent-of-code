@@ -1,3 +1,6 @@
+from functools import lru_cache
+
+
 def part1():
     grid = [line.strip() for line in open("day07.txt").readlines()]
     num_r = len(grid)
@@ -39,7 +42,39 @@ def part1():
 
 
 def part2():
-    pass
+    grid = tuple([tuple(line.strip()) for line in open("day07.txt").readlines()])
+    num_r = len(grid)
+    num_c = len(grid[0])
+
+    splitters = set()
+
+    for r in range(num_r):
+        for c in range(num_c):
+            if grid[r][c] == "S":
+                start = (r, c)
+            elif grid[r][c] == "^":
+                splitters.add((r, c))
+
+    assert start is not None, "Start not found"
+
+    print(num_paths(grid, start[0], start[1]))
+
+
+@lru_cache(maxsize=None)
+def num_paths(grid, r, c):
+     num_r = len(grid)
+     num_c = len(grid[0])
+
+     if c < 0 or c >= num_c:
+         return 0
+
+     if r == num_r - 1:
+         return 1
+
+     if grid[r][c] == "^":
+         return num_paths(grid, r, c - 1) + num_paths(grid, r, c + 1)
+     else:
+         return num_paths(grid, r + 1, c)
 
 
 def main():
