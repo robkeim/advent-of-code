@@ -61,23 +61,23 @@ def part1():
     print(result)
 
 
-def are_connected(edges1, start1, end1):
-    to_process1 = deque([start1])
+def are_connected(edges, start, end):
+    to_process = deque([start])
     seen1 = set()
 
-    while to_process1:
-        cur = to_process1.popleft()
+    while to_process:
+        cur = to_process.popleft()
 
         if cur in seen1:
             continue
 
         seen1.add(cur)
 
-        if cur == end1:
+        if cur == end:
             return True
 
-        for edge in edges1[cur]:
-            to_process1.append(edge)
+        for edge in edges[cur]:
+            to_process.append(edge)
 
     return False
 
@@ -90,7 +90,49 @@ def calculate_distance(p1, p2):
 
 
 def part2():
-    pass
+    lines = [tuple([int(value) for value in line.strip().split(",")]) for line in open("day08.txt").readlines()]
+
+    distances = []
+    num_nodes = set()
+
+    for i in range(len(lines)):
+        num_nodes.add(lines[i])
+        for j in range(i + 1, len(lines)):
+            distances.append((calculate_distance(lines[i], lines[j]), lines[i], lines[j]))
+
+    distances = sorted(distances)
+
+    edges = defaultdict(set)
+
+    num_connections = 0
+
+    for _, start, end in distances:
+        num_connections += 1
+
+        edges[start].add(end)
+        edges[end].add(start)
+
+        if is_fully_connected(edges, len(num_nodes)):
+            print(start[0] * end[0])
+            break
+
+
+def is_fully_connected(edges, num_nodes):
+    seen = set()
+    to_process = deque([list(edges.keys())[0]])
+
+    while to_process:
+        node = to_process.popleft()
+
+        if node in seen:
+            continue
+
+        seen.add(node)
+
+        for edge in edges[node]:
+            to_process.append(edge)
+
+    return len(seen) == num_nodes
 
 
 def main():
